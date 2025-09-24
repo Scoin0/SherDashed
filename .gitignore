@@ -1,6 +1,59 @@
+# Build directories
 bin/
 obj/
-SherDashed/Data/
-/packages/
-riderModule.iml
+out/
+
+# Rider / JetBrains IDE
+.idea/
+*.iml
+*.iws
+/.idea/
 /_ReSharper.Caches/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+logs/
+*.tlog
+
+# Packages
+*.nupkg
+*.snupkg
+*.symbols.nupkg
+packages/
+# If you’re using NuGet restore, ignore everything in packages/ except build/
+!packages/build/
+
+# Rider module file
+riderModule.iml
+
+# ASP.NET / IIS Express
+.vs/
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pdb
+
+# Publish output
+app.publish/
+PublishProfiles/
+
+# Entity Framework
+*.jfm
+migrations/
+
+# Azure stuff
+*.azurePubxml
+*.pubxml
+*.publishsettings
+
+# Others you may want
+*.DS_Store
+Thumbs.db
+
+SherDashed/Data/
