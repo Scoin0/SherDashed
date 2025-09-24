@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
+using SherDashed.Services;
+
 namespace SherDashed;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     { 
         var builder = WebApplication.CreateBuilder(args);
         
@@ -21,8 +23,17 @@ public class Program
             options.LowercaseUrls = true;
             options.LowercaseQueryStrings = true;
         });
+
+        builder.Services.AddSingleton<JsonDataService>();
+        builder.Services.AddScoped<AnnouncementService>();
         
         var app = builder.Build();
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var announcementService = scope.ServiceProvider.GetRequiredService<AnnouncementService>();
+            await announcementService.InitializeAsync();
+        }
 
         if (!app.Environment.IsDevelopment())
         {
