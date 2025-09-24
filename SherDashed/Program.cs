@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
 using SherDashed.Services;
 
@@ -39,6 +38,7 @@ public class Program
         {
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
+            app.UseHttpsRedirection();
         }
         
         app.UseHttpsRedirection();
@@ -48,8 +48,10 @@ public class Program
 
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
-
-        app.Run();
+            pattern: "{controller=Home}/{action=Index}/{id?}"
+        );
+        app.MapControllers();
+        
+        await app.RunAsync();
     }
 }

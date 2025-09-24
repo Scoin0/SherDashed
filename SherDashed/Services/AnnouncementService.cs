@@ -35,11 +35,19 @@ public class AnnouncementService
             announcement.AnnouncementId = existing.Count != 0 ? existing.Max(a => a.AnnouncementId) + 1 : 1;
         }
 
+        if (announcement.CreatedOn == default)
+        {
+            announcement.CreatedOn = DateTime.Now;
+        }
+
+        announcement.ModifiedOn = null;
+
         await _jsonService.AddToListAsync(FileName, announcement);
     }
 
     public async Task UpdateAsync(Announcement announcement)
     {
+        announcement.ModifiedOn = DateTime.Now;
         await _jsonService.UpdateInListAsync(FileName, a => a.AnnouncementId == announcement.AnnouncementId, announcement);
     }
 

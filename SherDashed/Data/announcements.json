@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "announcement_id": 1,
+    "announcement_message": "Testede",
+    "created_on": "0001-01-01T10:01:00",
+    "modified_on": "2025-09-23T20:16:55.4533416-10:00"
+  },
+  {
+    "announcement_id": 2,
+    "announcement_message": "sdf",
+    "created_on": "0004-02-03T04:04:00",
+    "modified_on": null
+  },
+  {
+    "announcement_id": 3,
+    "announcement_message": "y",
+    "created_on": "0001-01-01T06:07:00",
+    "modified_on": null
+  },
+  {
+    "announcement_id": 4,
+    "announcement_message": "Rwa",
+    "created_on": "2025-09-23T09:01:00",
+    "modified_on": null
+  }
+]

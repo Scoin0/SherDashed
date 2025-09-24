@@ -34,7 +34,7 @@ public class JsonDataService
     public async Task InitializeFileAsync<T>(string fileName) where T : class, new()
     {
         var filePath = GetFilePath(fileName);
-        if (!FileExists(filePath))
+        if (!File.Exists(filePath))
         {
             var emptyData = new List<T>();
             await SaveDataAsync(fileName, emptyData);
@@ -109,7 +109,7 @@ public class JsonDataService
         var list = await LoadListAsync<T>(fileName);
         var index = list.FindIndex(item => predicate(item));
 
-        if (index > 0)
+        if (index >= 0)
         {
             list[index] = updatedItem;
             await SaveDataAsync(fileName, list);
