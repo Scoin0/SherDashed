@@ -5,34 +5,31 @@ namespace SherDashed.Services;
 public class AnnouncementService
 {
     private readonly JsonDataService _jsonService;
-    private readonly string FileName = "announcements";
+    private const string FileName = "announcements";
 
-    public AnnouncementService(JsonDataService jsonService)
-    {
-        _jsonService = jsonService;
-    }
+    public AnnouncementService(JsonDataService jsonService) => _jsonService = jsonService;
 
-    public async Task InitializeAsync()
-    {
-        await _jsonService.InitializeFileAsync<Announcement>(FileName);
-    }
-    
-    public async Task<List<Announcement>> GetAllAsync()
-    {
-        return await _jsonService.LoadListAsync<Announcement>(FileName);
-    }
+    private async Task<Announcement.AnnouncementRoot> LoadRoot() =>
+        await _jsonService.LoadData<Announcement.AnnouncementRoot>(FileName);
 
-    public async Task<Announcement?> GetByIdAsync(int id)
-    {
-        return await _jsonService.FindInListAsync<Announcement>(FileName, a => a.AnnouncementId == id);
-    }
+    private async Task SaveRoot(Announcement.AnnouncementRoot root) => 
+        await _jsonService.SaveData(FileName, root);
 
-    public async Task AddAsync(Announcement announcement)
+    public async Task<List<Announcement>> GetAll() => 
+        (await LoadRoot()).Announcements;
+
+    public async Task<Announcement?> GetById(int id) =>
+        (await LoadRoot()).Announcements.FirstOrDefault(a => a.AnnouncementId == id);
+
+    public async Task Add(Announcement announcement)
     {
+        var root = await LoadRoot();
+
         if (announcement.AnnouncementId == 0)
         {
-            var existing = await GetAllAsync();
-            announcement.AnnouncementId = existing.Count != 0 ? existing.Max(a => a.AnnouncementId) + 1 : 1;
+            announcement.AnnouncementId = root.Announcements.Any()
+                ? root.Announcements.Max(a => a.AnnouncementId) + 1
+                : 1;
         }
 
         if (announcement.CreatedOn == default)
@@ -41,18 +38,33 @@ public class AnnouncementService
         }
 
         announcement.ModifiedOn = null;
-
-        await _jsonService.AddToListAsync(FileName, announcement);
+        
+        root.Announcements.Add(announcement);
+        
+        await SaveRoot(root);
     }
 
-    public async Task UpdateAsync(Announcement announcement)
+    public async Task<bool> Update(Announcement announcement)
     {
+        var root = await LoadRoot();
+        var index = root.Announcements.FindIndex(a => a.AnnouncementId == announcement.AnnouncementId);
+
+        if (index == -1) return false;
+
         announcement.ModifiedOn = DateTime.Now;
-        await _jsonService.UpdateInListAsync(FileName, a => a.AnnouncementId == announcement.AnnouncementId, announcement);
+        root.Announcements[index] = announcement;
+        await SaveRoot(root);
+        return true;
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task<bool> Delete(int id)
     {
-        await _jsonService.RemoveFromListAsync<Announcement>(FileName, a => a.AnnouncementId == id);
+        var root = await LoadRoot();
+        var removed = root.Announcements.FindIndex(a => a.AnnouncementId == id);
+
+        if (removed == -1) return false;
+        root.Announcements.RemoveAt(removed);
+        await SaveRoot(root);
+        return true;
     }
 }

@@ -18,14 +18,14 @@ public class AnnouncementController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<Announcement>>> GetAllAnnouncements()
     {
-        var announcements = await _announcementService.GetAllAsync();
+        var announcements = await _announcementService.GetAll();
         return Ok(announcements);
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<Announcement>> GetAnnouncementById(int id)
     {
-        var announcement = await _announcementService.GetByIdAsync(id);
+        var announcement = await _announcementService.GetById(id);
         return announcement == null ? NotFound($"The announcement with the ID {id} was not found.") : Ok(announcement);
     }
 }

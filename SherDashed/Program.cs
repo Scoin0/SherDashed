@@ -31,7 +31,7 @@ public class Program
         using (var scope = app.Services.CreateScope())
         {
             var announcementService = scope.ServiceProvider.GetRequiredService<AnnouncementService>();
-            await announcementService.InitializeAsync();
+            await announcementService.GetAll();
         }
 
         if (!app.Environment.IsDevelopment())

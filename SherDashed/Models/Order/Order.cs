@@ -14,4 +14,9 @@ public class Order
     public OrderStatus Status { get; set; } = OrderStatus.None;
     public List<OrderDetails> Details { get; set; } = [];
     public bool Delivery { get; set; } = false;
+
+    public class OrderRoot
+    {
+        public List<Order> Orders { get; set; } = new();
+    }
 }

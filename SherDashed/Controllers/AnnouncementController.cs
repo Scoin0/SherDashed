@@ -18,7 +18,7 @@ public class AnnouncementController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var announcements = await _announcementService.GetAllAsync();
+        var announcements = await _announcementService.GetAll();
         return View(announcements);
     }
 
@@ -26,7 +26,7 @@ public class AnnouncementController : Controller
     [HttpGet("details/{id:int}")]
     public async Task<IActionResult> Details(int id)
     {
-        var announcement = await _announcementService.GetByIdAsync(id);
+        var announcement = await _announcementService.GetById(id);
         return announcement == null ? NotFound() : View(announcement);
     }
     
@@ -48,7 +48,7 @@ public class AnnouncementController : Controller
     {
         if (ModelState.IsValid)
         {
-            await _announcementService.AddAsync(announcement);
+            await _announcementService.Add(announcement);
             return RedirectToAction(nameof(Index));
         }
         return View(announcement);
@@ -58,7 +58,7 @@ public class AnnouncementController : Controller
     [HttpGet("edit/{id:int}")]
     public async Task<IActionResult> Edit(int id)
     {
-        var announcement = await _announcementService.GetByIdAsync(id);
+        var announcement = await _announcementService.GetById(id);
         return announcement == null ? NotFound() : View(announcement);
     }
     
@@ -74,7 +74,7 @@ public class AnnouncementController : Controller
         {
             try
             {
-                await _announcementService.UpdateAsync(announcement);
+                await _announcementService.Update(announcement);
                 return RedirectToAction(nameof(Index));
             }
             catch (InvalidOperationException)
@@ -91,7 +91,7 @@ public class AnnouncementController : Controller
     {
         try
         {
-            await _announcementService.DeleteAsync(id);
+            await _announcementService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
         catch (InvalidOperationException)

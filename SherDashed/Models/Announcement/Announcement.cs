@@ -10,4 +10,9 @@ public class Announcement
     [Required]
     public DateTime CreatedOn { get; set; } = DateTime.Now;
     public DateTime? ModifiedOn { get; set; }
+
+    public class AnnouncementRoot
+    {
+        public List<Announcement> Announcements { get; set; } = new();
+    }
 }
