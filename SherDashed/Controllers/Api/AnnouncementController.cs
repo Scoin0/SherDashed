@@ -10,13 +10,10 @@ public class AnnouncementController : ControllerBase
 {
     private readonly AnnouncementService _announcementService;
 
-    public AnnouncementController(AnnouncementService announcementService)
-    {
-        _announcementService = announcementService;
-    }
+    public AnnouncementController(AnnouncementService announcementService) => _announcementService = announcementService;
 
     [HttpGet]
-    public async Task<ActionResult<List<Announcement>>> GetAllAnnouncements()
+    public async Task<ActionResult<Announcement>> GetAllAnnouncements()
     {
         var announcements = await _announcementService.GetAll();
         return Ok(announcements);
