@@ -11,4 +11,9 @@ public class Changelog
     public List<ChangelogEntry> EntryDescription { get; set; } = [];
     [Required]
     public DateTime EntryDate { get; set; }
+
+    public class ChangelogRoot
+    {
+        public List<Changelog> Changelogs { get; set; } = new();
+    }
 }
