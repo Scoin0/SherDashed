@@ -13,13 +13,13 @@
                 
                 <div class="form-group mb-3">
                     <label asp-for="AnnouncementMessage" class="form-label"></label>
-                    <textarea asp-for="AnnouncementMessage" class="form-control" rows="4" placeholder="Enter your announcement messgae..."></textarea>
+                    <textarea asp-for="AnnouncementMessage" class="form-control bg-dark text-light border-secondary" rows="4" placeholder="Enter your announcement messgae..."></textarea>
                     <span asp-validation-for="AnnouncementMessage" class="text-danger"></span>
                 </div>
                 
                 <div class="form-group mb-3">
                     <label asp-for="CreatedOn" class="form-label"></label>
-                    <input asp-for="CreatedOn" class="form-control" type="datetime-local" value="@Model.CreatedOn.ToString("yyyy-MM-ddTHH:mm")" />
+                    <input asp-for="CreatedOn" class="form-control bg-dark text-light border-secondary" type="datetime-local" value="@Model.CreatedOn.ToString("yyyy-MM-ddTHH:mm")" />
                     <span asp-validation-for="CreatedOn" class="text-danger"></span>
                 </div>
                 
